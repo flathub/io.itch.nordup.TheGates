@@ -26,6 +26,12 @@ Follow the portals to travel between these worlds and discover the ones that tru
   </screenshots>
   <releases>
 
+    <release version="0.5.1" date="2023-07-02">
+      <description>
+        <p>You can search now!</p> 
+      </description>
+    </release>  
+
     <release version="0.5.0" date="2023-06-27">
       <description>
         <p>You can search now!</p> 

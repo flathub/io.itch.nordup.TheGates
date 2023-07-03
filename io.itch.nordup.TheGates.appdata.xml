@@ -15,16 +15,22 @@ Follow the portals to travel between these worlds and discover the ones that tru
   <launchable type="desktop-id">io.itch.nordup.TheGates.desktop</launchable>
   <screenshots>
     <screenshot type="default">
-      <image>https://raw.githubusercontent.com/CredibleOpossum/thegates-flatpak/main/screenshots/screenshot_1.png</image>
+      <image>https://raw.githubusercontent.com/flathub/io.itch.nordup.TheGates/master/screenshots/screenshot_1.png</image>
     </screenshot>
     <screenshot type="default">
-      <image>https://raw.githubusercontent.com/CredibleOpossum/thegates-flatpak/main/screenshots/screenshot_2.png</image>
+      <image>https://raw.githubusercontent.com/flathub/io.itch.nordup.TheGates/master/screenshots/screenshot_2.png</image>
     </screenshot>
     <screenshot type="default">
-      <image>https://raw.githubusercontent.com/CredibleOpossum/thegates-flatpak/main/screenshots/screenshot_3.png</image>
+      <image>https://raw.githubusercontent.com/flathub/io.itch.nordup.TheGates/master/screenshots/screenshot_3.png</image>
     </screenshot>
   </screenshots>
   <releases>
+
+    <release version="0.5.1" date="2023-07-02">
+      <description>
+        <p>Added download progress visual.</p> 
+      </description>
+    </release>  
 
     <release version="0.5.0" date="2023-06-27">
       <description>

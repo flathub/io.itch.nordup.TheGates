@@ -35,8 +35,8 @@ modules:
     sources:
       - type: archive
         dest-filename: TheGates_Linux_0.5.1.zip
-        url: 'https://cdn.matix-media.net/dd/7571ee8b'
-        sha256: d26f7daea7f27c8b00c0b04a06141016af1c5304ba5622d422a1e38fd93b37f2
+        url: 'https://cdn.matix-media.net/dd/ee05cd92'
+        sha256: 376b6ee068679cd9e882c30ba0fb6f467e4db399d86d85f4924b629c2d6d3eb7
       - type: file
         path: gates.desktop
       - type: file

@@ -27,13 +27,13 @@ Follow the portals to travel between these worlds and discover the ones that tru
   <releases>
     <release version="0.5.3" date="2023-07-11">
       <description>
-        <p></p> 
+        <p>Minor improvements.</p> 
       </description>
     </release>
   
     <release version="0.5.2" date="2023-07-05">
       <description>
-        <p>Fix Dropdown menu issues</p> 
+        <p>Fix dropdown menu issues.</p> 
       </description>
     </release>
 

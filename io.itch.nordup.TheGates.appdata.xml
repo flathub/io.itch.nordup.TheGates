@@ -25,6 +25,13 @@ Follow the portals to travel between these worlds and discover the ones that tru
     </screenshot>
   </screenshots>
   <releases>
+  
+      <release version="0.6.1" date="2023-08-15">
+      <description>
+        <p>Search upgrades!</p> 
+      </description>
+    </release>
+  
     <release version="0.6.0" date="2023-07-16">
       <description>
         <p>Update to godot 4.1!</p> 

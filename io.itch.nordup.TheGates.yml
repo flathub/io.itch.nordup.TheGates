@@ -26,17 +26,19 @@ modules:
   - name: gates
     buildsystem: simple
     build-commands:
-      - 'mv Sandbox.x86_64 "${FLATPAK_DEST}/bin/Sandbox"'
+      - 'mkdir "${FLATPAK_DEST}/bin/sandbox"'
+      - 'mv Sandbox.x86_64 "${FLATPAK_DEST}/bin/sandbox/Sandbox"'
+      - 'mv sandbox_env.zip "${FLATPAK_DEST}/bin/sandbox/sandbox_env.zip"'
       - 'mv TheGates.x86_64 "${FLATPAK_DEST}/bin/TheGates"'
-      - 'ln -s "${FLATPAK_DEST}/bin/Sandbox" "${FLATPAK_DEST}/bin/Sandbox.x86_64"'
+      - 'ln -s "${FLATPAK_DEST}/bin/sandbox/Sandbox" "${FLATPAK_DEST}/bin/sandbox/Sandbox.x86_64"'
       - 'install -Dm644 gates.desktop /app/share/applications/${FLATPAK_ID}.desktop'
       - 'install -Dm644 ${FLATPAK_ID}.appdata.xml /app/share/metainfo/${FLATPAK_ID}.appdata.xml'
       - 'install -Dm644 icon_512.png /app/share/icons/hicolor/512x512/apps/${FLATPAK_ID}.png'
     sources:
       - type: archive
-        dest-filename: TheGates_Linux_0.6.1.zip
-        url: 'https://cdn.matix-media.net/dd/400c52c1'
-        sha256: 524bc348e17ace8f3c9904ad4f933a4cddf3f2687803c8b306c9488de59ddceb
+        dest-filename: TheGates_Linux_0.7.0.zip
+        url: 'https://cdn.matix-media.net/dd/2776a492'
+        sha256: 7b9d95cb319f9c0e4a05e108a39fa165f47fb1dec3407a2bf9a3722160a4e831
       - type: file
         path: gates.desktop
       - type: file

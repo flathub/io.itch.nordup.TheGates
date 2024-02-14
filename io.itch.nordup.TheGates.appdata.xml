@@ -2,7 +2,8 @@
 <component type="desktop-application">
   <id>io.itch.nordup.TheGates</id>
   <name>The Gates</name>
-  <project_license>LicenseRef-proprietary</project_license>
+  <developer_name>Nordup</developer_name>
+  <project_license>MIT</project_license>
   <metadata_license>CC0-1.0</metadata_license>
   <summary>Travel to different worlds created by developers all over the world!</summary>
   <description>
@@ -25,8 +26,14 @@ Follow the portals to travel between these worlds and discover the ones that tru
     </screenshot>
   </screenshots>
   <releases>
+  
+      <release version="0.7.1" date="2024-02-13">
+      <description>
+        <p>Gdextension fixes.</p> 
+      </description>
+    </release>
 
-      <release version="0.7.0" date="2023-08-15">
+      <release version="0.7.0" date="2023-08-21">
       <description>
         <p>Basic sandboxing update.</p> 
       </description>

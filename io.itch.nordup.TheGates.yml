@@ -15,7 +15,7 @@ finish-args:
   - '--socket=pulseaudio'
   - '--socket=x11'
   - '--device=dri'
-  - '--device=input'
+  - '--device=all'
 modules:
   - name: libzmq
     buildsystem: cmake-ninja

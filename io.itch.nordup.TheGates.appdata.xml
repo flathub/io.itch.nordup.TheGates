@@ -27,6 +27,12 @@ Follow the portals to travel between these worlds and discover the ones that tru
   </screenshots>
   <releases>
 
+      <release version="0.7.4" date="2024-03-15">
+      <description>
+        <p>Fps improvement</p> 
+      </description>
+    </release>
+
       <release version="0.7.3" date="2024-03-04">
       <description>
         <p>Fix resolution bug</p> 
@@ -80,12 +86,6 @@ Follow the portals to travel between these worlds and discover the ones that tru
         <p>You can search now!</p> 
       </description>
     </release>  
-
-    <release version="0.4.1" date="2023-06-20">
-      <description>
-        <p>Navigation buttons, finally!</p> 
-      </description>
-    </release>
 
   </releases>
   <keywords>

@@ -29,13 +29,13 @@ Follow the portals to travel between these worlds and discover the ones that tru
 
     <release version="0.7.6" date="2024-03-26">
       <description>
-        <p>Fixed mouse position on non 16:9 resolutions</p> 
+        <p>Fixed mouse position</p> 
       </description>
     </release>
 
     <release version="0.7.5" date="2024-03-24">
       <description>
-        <p>Fixed canvas scaling, not showing up gates</p> 
+        <p>Fixed canvas scaling</p> 
       </description>
 
     <release version="0.7.4" date="2024-03-15">

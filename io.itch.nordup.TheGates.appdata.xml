@@ -27,6 +27,17 @@ Follow the portals to travel between these worlds and discover the ones that tru
   </screenshots>
   <releases>
 
+    <release version="0.7.6" date="2024-03-26">
+      <description>
+        <p>Fixed mouse position on non 16:9 resolutions</p> 
+      </description>
+    </release>
+
+    <release version="0.7.5" date="2024-03-24">
+      <description>
+        <p>Fixed canvas scaling, not showing up gates</p> 
+      </description>
+
       <release version="0.7.4" date="2024-03-15">
       <description>
         <p>Fps improvement</p> 
@@ -74,17 +85,6 @@ Follow the portals to travel between these worlds and discover the ones that tru
         <p>Fix dropdown menu issues.</p> 
       </description>
     </release>
-
-    <release version="0.5.1" date="2023-07-02">
-      <description>
-        <p>Added download progress visual.</p> 
-      </description>
-    </release>
-
-    <release version="0.5.0" date="2023-06-27">
-      <description>
-        <p>You can search now!</p> 
-      </description>
     </release>  
 
   </releases>

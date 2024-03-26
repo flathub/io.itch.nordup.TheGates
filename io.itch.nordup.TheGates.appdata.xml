@@ -27,31 +27,43 @@ Follow the portals to travel between these worlds and discover the ones that tru
   </screenshots>
   <releases>
 
-      <release version="0.7.4" date="2024-03-15">
+    <release version="0.7.6" date="2024-03-26">
+      <description>
+        <p>Fixed mouse position</p> 
+      </description>
+    </release>
+
+    <release version="0.7.5" date="2024-03-24">
+      <description>
+        <p>Fixed canvas scaling</p> 
+      </description>
+    </release>
+
+    <release version="0.7.4" date="2024-03-15">
       <description>
         <p>Fps improvement</p> 
       </description>
     </release>
 
-      <release version="0.7.3" date="2024-03-04">
+    <release version="0.7.3" date="2024-03-04">
       <description>
         <p>Fix resolution bug</p> 
       </description>
     </release>
 
-      <release version="0.7.1" date="2024-02-13">
+    <release version="0.7.1" date="2024-02-13">
       <description>
         <p>Gdextension fixes.</p> 
       </description>
     </release>
 
-      <release version="0.7.0" date="2023-08-21">
+    <release version="0.7.0" date="2023-08-21">
       <description>
         <p>Basic sandboxing update.</p> 
       </description>
     </release>
   
-      <release version="0.6.1" date="2023-08-15">
+    <release version="0.6.1" date="2023-08-15">
       <description>
         <p>Search upgrades!</p> 
       </description>
@@ -74,18 +86,6 @@ Follow the portals to travel between these worlds and discover the ones that tru
         <p>Fix dropdown menu issues.</p> 
       </description>
     </release>
-
-    <release version="0.5.1" date="2023-07-02">
-      <description>
-        <p>Added download progress visual.</p> 
-      </description>
-    </release>
-
-    <release version="0.5.0" date="2023-06-27">
-      <description>
-        <p>You can search now!</p> 
-      </description>
-    </release>  
 
   </releases>
   <keywords>

@@ -27,6 +27,12 @@ Follow the portals to travel between these worlds and discover the ones that tru
   </screenshots>
   <releases>
 
+    <release version="0.7.7" date="2024-04-05">
+      <description>
+        <p>Fixed GDQuest gates</p> 
+      </description>
+    </release>
+
     <release version="0.7.6" date="2024-03-26">
       <description>
         <p>Fixed mouse position</p> 
@@ -80,12 +86,6 @@ Follow the portals to travel between these worlds and discover the ones that tru
         <p>Minor improvements.</p> 
       </description>
     </release>
-  
-    <release version="0.5.2" date="2023-07-05">
-      <description>
-        <p>Fix dropdown menu issues.</p> 
-      </description>
-    </release>
 
   </releases>
   <keywords>
@@ -94,4 +94,3 @@ Follow the portals to travel between these worlds and discover the ones that tru
   </keywords>
   <content_rating type="oars-1.0" />
 </component>
-

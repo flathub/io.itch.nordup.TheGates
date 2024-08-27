@@ -1,6 +1,6 @@
 [Desktop Entry]
-Categories=Game;
+Categories=WebBrowser;
 Exec=TheGates
 Icon=io.itch.nordup.TheGates
-Name=The Gates
+Name=TheGates
 Type=Application

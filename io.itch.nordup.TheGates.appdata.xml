@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component type="desktop-application">
   <id>io.itch.nordup.TheGates</id>
-  <name>The Gates</name>
+  <name>TheGates</name>
   <developer_name>Nordup</developer_name>
   <project_license>MIT</project_license>
   <metadata_license>CC0-1.0</metadata_license>
-  <summary>Travel to different worlds created by developers all over the world!</summary>
+  <summary>Free and open-source 3D internet browser build with Godot Engine</summary>
   <description>
     <p>Welcome to the new internet!
 Here, you can explore various worlds created by developers from all over the world!

@@ -27,6 +27,12 @@ Follow the portals to travel between these worlds and discover the ones that tru
   </screenshots>
   <releases>
 
+    <release version="0.10.0" date="2024-09-04">
+      <description>
+        <p>API change and open link</p> 
+      </description>
+    </release>
+
     <release version="0.9.5" date="2024-08-27">
       <description>
         <p>Show last opened gates first</p> 
@@ -78,12 +84,6 @@ Follow the portals to travel between these worlds and discover the ones that tru
     <release version="0.8.0" date="2024-05-06">
       <description>
         <p>thegate.io domain and ssl</p> 
-      </description>
-    </release>
-
-    <release version="0.7.12" date="2024-05-05">
-      <description>
-        <p>Updated Godot to 4.2.2</p> 
       </description>
     </release>
 

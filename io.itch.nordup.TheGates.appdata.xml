@@ -27,6 +27,12 @@ Follow the portals to travel between these worlds and discover the ones that tru
   </screenshots>
   <releases>
 
+    <release version="0.10.0.2" date="2024-09-07">
+      <description>
+        <p>Welcome page no connection mode</p> 
+      </description>
+    </release>
+
     <release version="0.10.0.1" date="2024-09-05">
       <description>
         <p>Welcome page potential fix</p> 
@@ -78,12 +84,6 @@ Follow the portals to travel between these worlds and discover the ones that tru
     <release version="0.8.2" date="2024-05-10">
       <description>
         <p>Sandbox folder</p> 
-      </description>
-    </release>
-
-    <release version="0.8.1" date="2024-05-07">
-      <description>
-        <p>Better icon</p> 
       </description>
     </release>
 

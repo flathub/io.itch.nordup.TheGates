@@ -27,63 +27,63 @@ Follow the portals to travel between these worlds and discover the ones that tru
   </screenshots>
   <releases>
 
+    <release version="0.10.2" date="2024-09-18">
+      <description>
+        <p>Better rendered texture filter</p>
+      </description>
+    </release>
+
+    <release version="0.10.1" date="2024-09-12">
+      <description>
+        <p>Fix not opening gates in new linux versions</p>
+      </description>
+    </release>
+
     <release version="0.10.0.2" date="2024-09-07">
       <description>
-        <p>Welcome page no connection mode</p> 
+        <p>Welcome page no connection mode</p>
       </description>
     </release>
 
     <release version="0.10.0.1" date="2024-09-05">
       <description>
-        <p>Welcome page potential fix</p> 
+        <p>Welcome page potential fix</p>
       </description>
     </release>
 
     <release version="0.10.0" date="2024-09-04">
       <description>
-        <p>API change and open link</p> 
+        <p>API change and open link</p>
       </description>
     </release>
 
     <release version="0.9.5" date="2024-08-27">
       <description>
-        <p>Show last opened gates first</p> 
+        <p>Show last opened gates first</p>
       </description>
     </release>
 
     <release version="0.9.4" date="2024-08-18">
       <description>
-        <p>Better support for Retina display</p> 
+        <p>Better support for Retina display</p>
       </description>
     </release>
 
     <release version="0.9.3" date="2024-07-25">
       <description>
-        <p>Fix running on older MacOS versions</p> 
+        <p>Fix running on older MacOS versions</p>
       </description>
     </release>
 
     <release version="0.9.2" date="2024-07-23">
       <description>
-        <p>Fixed resolution fails</p> 
+        <p>Fixed resolution fails</p>
       </description>
     </release>
 
     <release version="0.9.1" date="2024-07-16">
       <description>
-        <p>Hide sandbox from bottom dock</p> 
-      </description>
-    </release>
-
-    <release version="0.9.0" date="2024-07-16">
-      <description>
-        <p>MacOS support</p> 
-      </description>
-    </release>
-
-    <release version="0.8.2" date="2024-05-10">
-      <description>
-        <p>Sandbox folder</p> 
+        <p>Hide sandbox from bottom dock</p>
       </description>
     </release>
 

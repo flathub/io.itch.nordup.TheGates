@@ -27,6 +27,12 @@ Follow the portals to travel between these worlds and discover the ones that tru
   </screenshots>
   <releases>
 
+    <release version="0.11.1" date="2024-10-08">
+      <description>
+        <p>Minor UI fixes. Gate loading fixes</p>
+      </description>
+    </release>
+
     <release version="0.11.0" date="2024-09-27">
       <description>
         <p>Domain name changes</p>
@@ -78,12 +84,6 @@ Follow the portals to travel between these worlds and discover the ones that tru
     <release version="0.9.3" date="2024-07-25">
       <description>
         <p>Fix running on older MacOS versions</p>
-      </description>
-    </release>
-
-    <release version="0.9.2" date="2024-07-23">
-      <description>
-        <p>Fixed resolution fails</p>
       </description>
     </release>
 

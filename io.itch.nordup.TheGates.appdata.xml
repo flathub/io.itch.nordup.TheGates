@@ -27,7 +27,7 @@ Follow the portals to travel between these worlds and discover the ones that tru
   </screenshots>
   <releases>
 
-    <release version="0.13.4" date="2024-11-03">
+    <release version="0.13.4" date="2024-11-05">
       <description>
         <p>Fix crashes. Better crash detection</p>
       </description>

@@ -37,9 +37,9 @@ modules:
       - 'install -Dm644 icon_512.png /app/share/icons/hicolor/512x512/apps/${FLATPAK_ID}.png'
     sources:
       - type: archive
-        dest-filename: TheGates_Linux_0.13.4.zip
-        url: 'https://cdn.matix-media.net/dd/74bb45dd'
-        sha256: 5f9500a65c2e13c823632b6e6de542d3491e62d85e472d51c3a2ecfe57da8ac0
+        dest-filename: TheGates_Linux_0.14.0.zip
+        url: 'https://cdn.matix-media.net/dd/2c45cf7b'
+        sha256: cd81f370c64e6cbaef94ba45e16cba70ddc5c2c85fad4d160fea01ba33895ab3
       - type: file
         path: gates.desktop
       - type: file

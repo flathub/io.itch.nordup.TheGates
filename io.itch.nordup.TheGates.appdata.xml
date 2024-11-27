@@ -27,6 +27,12 @@ Follow the portals to travel between these worlds and discover the ones that tru
   </screenshots>
   <releases>
 
+    <release version="0.14.0" date="2024-11-27">
+      <description>
+        <p>App redesign</p>
+      </description>
+    </release>
+
     <release version="0.13.4.1" date="2024-11-06">
       <description>
         <p>Fix linux crash</p>
@@ -75,22 +81,13 @@ Follow the portals to travel between these worlds and discover the ones that tru
       </description>
     </release>
 
-    <release version="0.11.2.1" date="2024-10-16">
-      <description>
-        <p>Welcome hub new server test</p>
-      </description>
-    </release>
-
-    <release version="0.11.2" date="2024-10-15">
-      <description>
-        <p>Fix resolving dns on linux</p>
-      </description>
-    </release>
-
   </releases>
   <keywords>
-    <keyword>portal</keyword>
     <keyword>godot</keyword>
+    <keyword>browser</keyword>
+    <keyword>web</keyword>
+    <keyword>gates</keyword>
+    <keyword>portal</keyword>
   </keywords>
   <content_rating type="oars-1.0" />
 </component>

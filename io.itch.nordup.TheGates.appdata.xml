@@ -27,6 +27,12 @@ Follow the portals to travel between these worlds and discover the ones that tru
   </screenshots>
   <releases>
 
+    <release version="0.14.1" date="2024-12-06">
+      <description>
+        <p>Gate loading design</p>
+      </description>
+    </release>
+
     <release version="0.14.0" date="2024-11-27">
       <description>
         <p>App redesign</p>
@@ -72,12 +78,6 @@ Follow the portals to travel between these worlds and discover the ones that tru
     <release version="0.12.1" date="2024-10-25">
       <description>
         <p>Maximized window mode</p>
-      </description>
-    </release>
-
-    <release version="0.12.0" date="2024-10-25">
-      <description>
-        <p>Updated app to use Godot 4.3</p>
       </description>
     </release>
 

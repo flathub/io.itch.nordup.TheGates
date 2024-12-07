@@ -27,6 +27,12 @@ Follow the portals to travel between these worlds and discover the ones that tru
   </screenshots>
   <releases>
 
+    <release version="0.14.2" date="2024-12-07">
+      <description>
+        <p>Parallel resource downloading</p>
+      </description>
+    </release>
+
     <release version="0.14.1" date="2024-12-06">
       <description>
         <p>Gate loading design</p>
@@ -72,12 +78,6 @@ Follow the portals to travel between these worlds and discover the ones that tru
     <release version="0.13.0" date="2024-10-26">
       <description>
         <p>Detect crashed gates</p>
-      </description>
-    </release>
-
-    <release version="0.12.1" date="2024-10-25">
-      <description>
-        <p>Maximized window mode</p>
       </description>
     </release>
 

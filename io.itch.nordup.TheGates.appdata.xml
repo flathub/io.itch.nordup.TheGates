@@ -11,8 +11,8 @@
 Here, you can explore various worlds created by developers from all over the world!
 Follow the portals to travel between these worlds and discover the ones that truly captivate you. If you're seeking adventures, then this place is perfect for you!</p>
   </description>
-  <url type="homepage">https://nordup.itch.io/the-gates</url>
-  <url type="bugtracker">https://github.com/CredibleOpossum/thegates-flatpak/issues</url>
+  <url type="homepage">https://thegates.io/</url>
+  <url type="bugtracker">https://github.com/thegatesbrowser/thegates/issues</url>
   <launchable type="desktop-id">io.itch.nordup.TheGates.desktop</launchable>
   <screenshots>
     <screenshot type="default">
@@ -23,6 +23,12 @@ Follow the portals to travel between these worlds and discover the ones that tru
     </screenshot>
     <screenshot type="default">
       <image>https://raw.githubusercontent.com/flathub/io.itch.nordup.TheGates/master/screenshots/screenshot_3.png</image>
+    </screenshot>
+    <screenshot type="default">
+      <image>https://raw.githubusercontent.com/flathub/io.itch.nordup.TheGates/master/screenshots/screenshot_4.png</image>
+    </screenshot>
+    <screenshot type="default">
+      <image>https://raw.githubusercontent.com/flathub/io.itch.nordup.TheGates/master/screenshots/screenshot_5.png</image>
     </screenshot>
   </screenshots>
   <releases>

@@ -33,6 +33,12 @@ Follow the portals to travel between these worlds and discover the ones that tru
   </screenshots>
   <releases>
 
+    <release version="0.15.1" date="2025-06-11">
+      <description>
+        <p>Temporarily disable linux sandboxing</p>
+      </description>
+    </release>
+
     <release version="0.15.0" date="2025-03-29">
       <description>
         <p>Search suggestions and better gate errors</p>
@@ -78,12 +84,6 @@ Follow the portals to travel between these worlds and discover the ones that tru
     <release version="0.13.2" date="2024-10-31">
       <description>
         <p>Gate logs and crash reports</p>
-      </description>
-    </release>
-
-    <release version="0.13.1" date="2024-10-29">
-      <description>
-        <p>Log failed system calls</p>
       </description>
     </release>
 

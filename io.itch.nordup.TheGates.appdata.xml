@@ -33,6 +33,12 @@ Follow the portals to travel between these worlds and discover the ones that tru
   </screenshots>
   <releases>
 
+    <release version="0.16.0" date="2025-08-15">
+      <description>
+        <p>Onboarding for new users</p>
+      </description>
+    </release>
+
     <release version="0.15.2" date="2025-06-29">
       <description>
         <p>Gate icons and undiscoverable mode</p>
@@ -78,12 +84,6 @@ Follow the portals to travel between these worlds and discover the ones that tru
     <release version="0.13.4" date="2024-11-03">
       <description>
         <p>Fix crashes. Better crash detection</p>
-      </description>
-    </release>
-
-    <release version="0.13.3" date="2024-11-01">
-      <description>
-        <p>Fix crash. Better popup buttons</p>
       </description>
     </release>
 

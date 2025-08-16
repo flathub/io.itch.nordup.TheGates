@@ -85,7 +85,7 @@ def compute_sha256_with_openssl(file_path: Path) -> str:
 
 
 def extract_version_from_filename(filename: str) -> str:
-    """Extract semantic-like version from filename (e.g., 0.16.1)."""
+    """Extract semantic-like version from filename (e.g., 0.16.2)."""
     m = re.search(r'(\d+\.\d+(?:\.\d+)*)', filename)
     if not m:
         raise RuntimeError(f'Could not extract version from filename: {filename!r}')
@@ -148,6 +148,8 @@ def insert_release_note(appdata_path: Path, version: str, description: str, date
     print(f'Inserted release {version} into {appdata_path}')
 
 
+# ----------------- Git helpers -----------------
+
 def run_git(commands: list[str], cwd: Path) -> str:
     result = subprocess.run(commands, cwd=str(cwd), check=True, capture_output=True, text=True)
     return (result.stdout or '') + (result.stderr or '')
@@ -160,42 +162,68 @@ def ensure_git_repo(cwd: Path) -> None:
         raise RuntimeError(f'Not a git repository: {cwd}') from e
 
 
-def update_git_repo(repo_root: Path, version: str, description: str, master_branch: str = 'master', branch_prefix: str = 'release-') -> str:
-    """Switch to master, pull, create/checkout release branch, and commit changes.
+def git_is_dirty(cwd: Path) -> bool:
+    proc = subprocess.run(['git', 'status', '--porcelain'], cwd=str(cwd), capture_output=True, text=True)
+    return bool((proc.stdout or '').strip())
 
-    Returns the branch name used.
-    """
-    ensure_git_repo(repo_root)
 
-    # Fetch and update master
-    print(run_git(['git', 'fetch', 'origin'], repo_root))
-    print(run_git(['git', 'checkout', master_branch], repo_root))
-    # Pull fast-forward only to avoid merges
+def git_stash(cwd: Path, message: str) -> Optional[str]:
+    proc = subprocess.run(['git', 'stash', 'push', '-u', '-m', message], cwd=str(cwd), capture_output=True, text=True)
+    out = (proc.stdout or '') + (proc.stderr or '')
+    if 'No local changes to save' in out:
+        return None
+    if proc.returncode != 0:
+        raise RuntimeError(f'git stash failed: {out}')
+    # Best-effort: newest stash is stash@{0}
+    return 'stash@{0}'
+
+
+def git_checkout(cwd: Path, ref: str) -> None:
+    print(run_git(['git', 'checkout', ref], cwd))
+
+
+def git_pull_ff_only(cwd: Path) -> None:
     try:
-        print(run_git(['git', 'pull', '--ff-only'], repo_root))
+        print(run_git(['git', 'pull', '--ff-only'], cwd))
     except subprocess.CalledProcessError as e:
         raise RuntimeError('git pull --ff-only failed. Please resolve branch state manually.') from e
 
-    branch_name = f"{branch_prefix}{version}" if branch_prefix else version
 
-    # Checkout or create branch
+def git_prepare_master(repo_root: Path, master_branch: str, auto_stash: bool, stash_pop: bool) -> Optional[str]:
+    ensure_git_repo(repo_root)
+    stash_ref: Optional[str] = None
+    if git_is_dirty(repo_root) and auto_stash:
+        msg = f'create_release auto-stash at {datetime.datetime.now().isoformat(timespec="seconds")}'
+        stash_ref = git_stash(repo_root, msg)
+        if stash_ref:
+            print(f'Created stash {stash_ref} for local changes')
+    print(run_git(['git', 'fetch', 'origin'], repo_root))
+    git_checkout(repo_root, master_branch)
+    git_pull_ff_only(repo_root)
+    # Optionally pop to master (usually not desired); keep for completeness
+    if stash_pop and stash_ref:
+        print(run_git(['git', 'stash', 'pop', stash_ref], repo_root))
+        stash_ref = None
+    return stash_ref
+
+
+def git_checkout_or_create_release(repo_root: Path, branch_name: str, base_branch: str) -> None:
     # Local exists?
     local_branch_exists = subprocess.run(['git', 'show-ref', '--verify', '--quiet', f'refs/heads/{branch_name}'], cwd=str(repo_root)).returncode == 0
     if local_branch_exists:
-        print(run_git(['git', 'checkout', branch_name], repo_root))
+        git_checkout(repo_root, branch_name)
+        return
+    # Remote exists?
+    remote_exists = subprocess.run(['git', 'ls-remote', '--exit-code', '--heads', 'origin', branch_name], cwd=str(repo_root)).returncode == 0
+    if remote_exists:
+        print(run_git(['git', 'checkout', '-b', branch_name, f'origin/{branch_name}'], repo_root))
     else:
-        # Remote exists?
-        remote_exists = subprocess.run(['git', 'ls-remote', '--exit-code', '--heads', 'origin', branch_name], cwd=str(repo_root)).returncode == 0
-        if remote_exists:
-            print(run_git(['git', 'checkout', '-b', branch_name, f'origin/{branch_name}'], repo_root))
-        else:
-            print(run_git(['git', 'checkout', '-b', branch_name], repo_root))
+        print(run_git(['git', 'checkout', '-b', branch_name, base_branch], repo_root))
 
-    # Stage and commit
+
+def git_commit_all(repo_root: Path, message: str) -> None:
     print(run_git(['git', 'add', '-A'], repo_root))
-    commit_msg = f"update to {version} - {description}"
-    # If nothing to commit, git commit exits non-zero; handle gracefully
-    commit_proc = subprocess.run(['git', 'commit', '-m', commit_msg], cwd=str(repo_root), capture_output=True, text=True)
+    commit_proc = subprocess.run(['git', 'commit', '-m', message], cwd=str(repo_root), capture_output=True, text=True)
     if commit_proc.returncode != 0:
         msg = (commit_proc.stdout or '') + (commit_proc.stderr or '')
         if 'nothing to commit' in msg.lower():
@@ -205,8 +233,8 @@ def update_git_repo(repo_root: Path, version: str, description: str, master_bran
     else:
         print(commit_proc.stdout)
 
-    return branch_name
 
+# ----------------- YAML edit -----------------
 
 def update_yaml_text(yaml_text: str, new_dest_filename: str, new_sha256: str) -> str:
     """Update dest-filename and sha256 in the first archive source under gates module.
@@ -317,13 +345,15 @@ def update_yaml_text(yaml_text: str, new_dest_filename: str, new_sha256: str) ->
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description='Update gates archive source sha256 and dest-filename from remote URL')
+    parser = argparse.ArgumentParser(description='Create release: update sources, AppData, and git branch/commit')
     parser.add_argument('--yaml-path', default=str(Path(__file__).resolve().parent / 'io.itch.nordup.TheGates.yml'), help='Path to io.itch.nordup.TheGates.yml')
     parser.add_argument('--appdata-path', default=str(Path(__file__).resolve().parent / 'io.itch.nordup.TheGates.appdata.xml'), help='Path to io.itch.nordup.TheGates.appdata.xml')
     parser.add_argument('--release-description', required=True, help='Release description text to insert into AppData XML')
     parser.add_argument('--master-branch', default='master', help='Name of the master branch to update (default: master)')
     parser.add_argument('--branch-prefix', default='release-', help='Prefix for release branch names (default: release-)')
     parser.add_argument('--no-git', action='store_true', help='Skip git operations')
+    parser.add_argument('--no-stash', action='store_true', help='Do not auto-stash local changes before switching to master')
+    parser.add_argument('--stash-pop', action='store_true', help='Pop the auto-created stash after switching to master (not typical)')
     args = parser.parse_args()
 
     repo_root = Path(__file__).resolve().parent
@@ -334,63 +364,85 @@ def main() -> int:
         print(f'YAML file not found: {yaml_path}', file=sys.stderr)
         return 1
 
-    # Read YAML text and locate URL via textual scan in case of future format changes
-    yaml_text = yaml_path.read_text(encoding='utf-8')
-    try:
-        # We will extract the URL using the same finder we use in update function
-        # Run a dry scan to get the URL
-        lines = yaml_text.splitlines()
-        def leading_spaces(s: str) -> int:
-            return len(s) - len(s.lstrip(' '))
-        gates_idx = next(i for i, ln in enumerate(lines) if re.match(r"^\s*-\s*name:\s*gates\s*$", ln))
-        gates_indent = leading_spaces(lines[gates_idx])
-        sources_idx = next(i for i in range(gates_idx + 1, len(lines)) if leading_spaces(lines[i]) > gates_indent and re.match(rf"^\s{{{gates_indent + 2},}}sources:\s*$", lines[i]))
-        sources_indent = leading_spaces(lines[sources_idx])
-        archive_item_idx = next(i for i in range(sources_idx + 1, len(lines)) if leading_spaces(lines[i]) > sources_indent and re.match(rf"^\s{{{sources_indent + 2}}}-\s*type:\s*archive\b", lines[i]))
-        mapping_child_indent = leading_spaces(lines[archive_item_idx]) + 2
-        url_line_idx = next(i for i in range(archive_item_idx + 1, len(lines)) if leading_spaces(lines[i]) == mapping_child_indent and re.match(rf"^\s{{{mapping_child_indent}}}url:\s*", lines[i]))
-        url_raw = lines[url_line_idx].split(':', 1)[1].strip()
-        if len(url_raw) >= 2 and ((url_raw[0] == url_raw[-1] == '"') or (url_raw[0] == url_raw[-1] == "'")):
-            download_url = url_raw[1:-1]
-        else:
-            download_url = url_raw
-    except StopIteration:
-        print('Failed to locate the gates->sources->archive url in YAML', file=sys.stderr)
-        return 1
+    # Prepare git: switch to up-to-date master BEFORE making changes
+    stash_ref: Optional[str] = None
+    if not args.no_git:
+        try:
+            stash_ref = git_prepare_master(repo_root, args.master_branch, auto_stash=(not args.no_stash), stash_pop=args.stash_pop)
+        except Exception as e:
+            print(f'Git preparation failed: {e}', file=sys.stderr)
+            return 1
 
-    # Download to temp dir
+    # Download to temp dir and derive version and sha
     with tempfile.TemporaryDirectory() as tmp_dir:
         tmp_dir_path = Path(tmp_dir)
+        # Read YAML text and locate URL via textual scan
+        yaml_text = yaml_path.read_text(encoding='utf-8')
+        try:
+            lines = yaml_text.splitlines()
+            def leading_spaces(s: str) -> int:
+                return len(s) - len(s.lstrip(' '))
+            gates_idx = next(i for i, ln in enumerate(lines) if re.match(r"^\s*-\s*name:\s*gates\s*$", ln))
+            gates_indent = leading_spaces(lines[gates_idx])
+            sources_idx = next(i for i in range(gates_idx + 1, len(lines)) if leading_spaces(lines[i]) > gates_indent and re.match(rf"^\s{{{gates_indent + 2},}}sources:\s*$", lines[i]))
+            sources_indent = leading_spaces(lines[sources_idx])
+            archive_item_idx = next(i for i in range(sources_idx + 1, len(lines)) if leading_spaces(lines[i]) > sources_indent and re.match(rf"^\s{{{sources_indent + 2}}}-\s*type:\s*archive\b", lines[i]))
+            mapping_child_indent = leading_spaces(lines[archive_item_idx]) + 2
+            url_line_idx = next(i for i in range(archive_item_idx + 1, len(lines)) if leading_spaces(lines[i]) == mapping_child_indent and re.match(rf"^\s{{{mapping_child_indent}}}url:\s*", lines[i]))
+            url_raw = lines[url_line_idx].split(':', 1)[1].strip()
+            if len(url_raw) >= 2 and ((url_raw[0] == url_raw[-1] == '"') or (url_raw[0] == url_raw[-1] == "'")):
+                download_url = url_raw[1:-1]
+            else:
+                download_url = url_raw
+        except StopIteration:
+            print('Failed to locate the gates->sources->archive url in YAML', file=sys.stderr)
+            return 1
+
         print(f'Downloading: {download_url}')
         file_path = stream_download(download_url, tmp_dir_path)
         print(f'Downloaded to: {file_path}')
 
-        # Compute sha256 using openssl
         sha256_hex = compute_sha256_with_openssl(file_path)
         print(f'sha256: {sha256_hex}')
 
-        # Update YAML text
+        version = extract_version_from_filename(file_path.name)
+
+        # If using git, create/checkout the release branch BEFORE writing changes
+        if not args.no_git:
+            try:
+                branch_name = f"{args.branch_prefix}{version}" if args.branch_prefix else version
+                git_checkout_or_create_release(repo_root, branch_name, args.master_branch)
+                # If we created a stash earlier and the user wants to pop it onto the release branch
+                if args.stash_pop and stash_ref:
+                    print(run_git(['git', 'stash', 'pop', stash_ref], repo_root))
+                    stash_ref = None
+            except Exception as e:
+                print(f'Git branch prepare failed: {e}', file=sys.stderr)
+                return 1
+
+        # Now write changes into the repo working tree on the release branch
         updated_text = update_yaml_text(yaml_text, file_path.name, sha256_hex)
         yaml_path.write_text(updated_text, encoding='utf-8')
         print(f'Updated {yaml_path} with dest-filename={file_path.name} and sha256={sha256_hex}')
 
-        # Extract version and update AppData release notes
-        version = extract_version_from_filename(file_path.name)
         insert_release_note(appdata_path, version, args.release_description)
 
-        # Delete file (TemporaryDirectory cleanup will handle it). Explicitly remove for clarity.
+        # Delete temp file explicitly (TemporaryDirectory will also clean it)
         try:
             file_path.unlink(missing_ok=True)
         except Exception:
             pass
 
-    # Git operations after files changed
+    # Commit
     if not args.no_git:
         try:
-            branch = update_git_repo(repo_root, version, args.release_description, master_branch=args.master_branch, branch_prefix=args.branch_prefix)
-            print(f'Git updated on branch: {branch}')
+            commit_msg = f"update to {version} - {args.release_description}"
+            git_commit_all(repo_root, commit_msg)
+            print('Git commit complete.')
+            if stash_ref:
+                print(f'Note: Local changes were stashed as {stash_ref}. You can apply them with: git stash pop {stash_ref}')
         except Exception as e:
-            print(f'Git update failed: {e}', file=sys.stderr)
+            print(f'Git commit failed: {e}', file=sys.stderr)
             return 1
 
     return 0

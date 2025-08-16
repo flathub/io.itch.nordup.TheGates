@@ -33,6 +33,12 @@ Follow the portals to travel between these worlds and discover the ones that tru
   </screenshots>
   <releases>
 
+    <release version="0.16.2" date="2025-08-16">
+      <description>
+        <p>Bookmark animations and better gate crash handling</p>
+      </description>
+    </release>
+
     <release version="0.16.1" date="2025-08-16">
       <description>
         <p>Onboarding events</p>

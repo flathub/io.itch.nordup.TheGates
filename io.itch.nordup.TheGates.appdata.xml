@@ -33,6 +33,12 @@ Follow the portals to travel between these worlds and discover the ones that tru
   </screenshots>
   <releases>
 
+    <release version="0.17.2" date="2025-08-19">
+      <description>
+        <p>Faster search suggestions</p>
+      </description>
+    </release>
+
     <release version="0.17.1" date="2025-08-19">
       <description>
         <p>No search results note</p>

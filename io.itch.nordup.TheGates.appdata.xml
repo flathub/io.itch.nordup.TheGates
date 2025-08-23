@@ -33,6 +33,12 @@ Follow the portals to travel between these worlds and discover the ones that tru
   </screenshots>
   <releases>
 
+    <release version="0.18.0" date="2025-08-23">
+      <description>
+        <p>Handle query strings, pass gate url to child process</p>
+      </description>
+    </release>
+
     <release version="0.17.4" date="2025-08-20">
       <description>
         <p>Recognize url domains without http (2)</p>

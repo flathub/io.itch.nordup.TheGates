@@ -33,6 +33,12 @@ Follow the portals to travel between these worlds and discover the ones that tru
   </screenshots>
   <releases>
 
+    <release version="0.19.0" date="2025-08-29">
+      <description>
+        <p>App tutorial and highlighted buttons</p>
+      </description>
+    </release>
+
     <release version="0.18.1" date="2025-08-23">
       <description>
         <p>Hide information screen on gate start</p>

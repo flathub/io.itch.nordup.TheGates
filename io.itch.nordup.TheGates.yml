@@ -38,7 +38,7 @@ modules:
       - type: archive
         dest-filename: TheGates_Linux_0.19.1.zip
         url: 'https://thegates.io/downloads/linux-latest'
-        sha256: 82b63f8e7bc76d5ab82e425f89614fefdd5dd4ad5ced9b75819c22a8a3e34dbe
+        sha256: c61a61167b920833d2430d04252847d64e8fcc9c60f61e8920499561115fe5c2
       - type: file
         path: gates.desktop
       - type: file

@@ -35,6 +35,12 @@ Follow the portals to travel between these worlds and discover the ones that tru
 
     <release version="0.19.1" date="2025-08-30">
       <description>
+        <p>Fix gate crashes</p>
+      </description>
+    </release>
+
+    <release version="0.19.1" date="2025-08-30">
+      <description>
         <p>Start tutorial after onboarding</p>
       </description>
     </release>

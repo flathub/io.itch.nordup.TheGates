@@ -33,6 +33,12 @@ Follow the portals to travel between these worlds and discover the ones that tru
   </screenshots>
   <releases>
 
+    <release version="0.19.3" date="2025-08-31">
+      <description>
+        <p>Better onboarding image, log gate crashes and more fixes</p>
+      </description>
+    </release>
+
     <release version="0.19.2" date="2025-08-30">
       <description>
         <p>Better onboarding transition</p>

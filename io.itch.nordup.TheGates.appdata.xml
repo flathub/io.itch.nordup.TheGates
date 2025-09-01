@@ -33,6 +33,12 @@ Follow the portals to travel between these worlds and discover the ones that tru
   </screenshots>
   <releases>
 
+    <release version="0.19.5" date="2025-09-01">
+      <description>
+        <p>Small onboarding fix</p>
+      </description>
+    </release>
+
     <release version="0.19.4" date="2025-08-31">
       <description>
         <p>Fix debug logs</p>

@@ -8,6 +8,7 @@ import subprocess
 import sys
 import tempfile
 import datetime
+import webbrowser
 from pathlib import Path
 from typing import Optional
 from urllib.request import Request, urlopen
@@ -176,6 +177,26 @@ def git_stash(cwd: Path, message: str) -> Optional[str]:
         raise RuntimeError(f'git stash failed: {out}')
     # Best-effort: newest stash is stash@{0}
     return 'stash@{0}'
+
+
+def git_current_branch(cwd: Path) -> str:
+    result = subprocess.run(['git', 'rev-parse', '--abbrev-ref', 'HEAD'], cwd=str(cwd), check=True, capture_output=True, text=True)
+    return (result.stdout or '').strip()
+
+
+def git_upstream_exists(cwd: Path) -> bool:
+    proc = subprocess.run(['git', 'rev-parse', '--abbrev-ref', '--symbolic-full-name', '@{u}'], cwd=str(cwd), capture_output=True, text=True)
+    return proc.returncode == 0
+
+
+def git_log_unpushed(cwd: Path) -> str:
+    try:
+        if git_upstream_exists(cwd):
+            return run_git(['git', 'log', '--oneline', '--decorate', '--graph', '@{u}..HEAD'], cwd)
+        else:
+            return run_git(['git', 'log', '--oneline', '--decorate', '--graph', '-n', '20'], cwd)
+    except subprocess.CalledProcessError:
+        return ''
 
 
 def git_checkout(cwd: Path, ref: str) -> None:
@@ -444,6 +465,36 @@ def main() -> int:
         except Exception as e:
             print(f'Git commit failed: {e}', file=sys.stderr)
             return 1
+
+    # Offer to publish branch to remote and open repo link
+    if not args.no_git:
+        try:
+            branch = git_current_branch(repo_root)
+        except Exception:
+            branch = '(unknown)'
+
+        print('\nReview commits to be pushed (if any):')
+        log_text = git_log_unpushed(repo_root)
+        print(log_text.strip() or '(no commits to show)')
+
+        resp = input(f'Publish branch "{branch}" to origin? [y/N]: ').strip()
+        if resp.lower() == 'y':
+            try:
+                if git_upstream_exists(repo_root):
+                    print(run_git(['git', 'push'], repo_root))
+                else:
+                    print(run_git(['git', 'push', '-u', 'origin', branch], repo_root))
+                print('Pushed branch to origin.')
+                try:
+                    webbrowser.open('https://github.com/Nordup/io.itch.nordup.TheGates')
+                    print('Opened repository in your default browser.')
+                except Exception as e:
+                    print(f'Failed to open browser: {e}')
+            except Exception as e:
+                print(f'Git push failed: {e}', file=sys.stderr)
+                return 1
+        else:
+            print('Skipping push to origin by user choice.')
 
     return 0
 

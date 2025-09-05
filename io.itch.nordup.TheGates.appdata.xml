@@ -33,6 +33,12 @@ Follow the portals to travel between these worlds and discover the ones that tru
   </screenshots>
   <releases>
 
+    <release version="0.20.2" date="2025-09-05">
+      <description>
+        <p>Drag window</p>
+      </description>
+    </release>
+
     <release version="0.20.0" date="2025-09-04">
       <description>
         <p>Major bug fixes: not responging, mouse grab, sandbox hang out</p>

@@ -33,6 +33,12 @@ Follow the portals to travel between these worlds and discover the ones that tru
   </screenshots>
   <releases>
 
+    <release version="0.21.1" date="2025-09-10">
+      <description>
+        <p>File caching, 5x faster requests and lot of bug fixes (2)</p>
+      </description>
+    </release>
+
     <release version="0.21.0" date="2025-09-09">
       <description>
         <p>File caching, 5x faster requests and lot of bug fixes</p>

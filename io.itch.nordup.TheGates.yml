@@ -27,10 +27,10 @@ modules:
   - name: gates
     buildsystem: simple
     build-commands:
-      - 'mkdir "${FLATPAK_DEST}/bin/sandbox"'
-      - 'mv Sandbox.x86_64 "${FLATPAK_DEST}/bin/sandbox/Sandbox"'
+      - 'mkdir "${FLATPAK_DEST}/bin/renderer"'
+      - 'mv Renderer-godot_v4.5.x86_64 "${FLATPAK_DEST}/bin/renderer/Renderer"'
       - 'mv TheGates.x86_64 "${FLATPAK_DEST}/bin/TheGates"'
-      - 'ln -s "${FLATPAK_DEST}/bin/sandbox/Sandbox" "${FLATPAK_DEST}/bin/sandbox/Sandbox.x86_64"'
+      - 'ln -s "${FLATPAK_DEST}/bin/renderer/Renderer" "${FLATPAK_DEST}/bin/renderer/Renderer-godot_v4.5.x86_64"'
       - 'install -Dm644 gates.desktop /app/share/applications/${FLATPAK_ID}.desktop'
       - 'install -Dm644 ${FLATPAK_ID}.appdata.xml /app/share/metainfo/${FLATPAK_ID}.appdata.xml'
       - 'install -Dm644 icon_512.png /app/share/icons/hicolor/512x512/apps/${FLATPAK_ID}.png'

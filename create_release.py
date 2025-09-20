@@ -10,9 +10,10 @@ import tempfile
 import datetime
 import webbrowser
 from pathlib import Path
-from typing import Optional
+from typing import Optional, Tuple
 from urllib.request import Request, urlopen
 from urllib.parse import urlparse
+import zipfile
 
 
 def parse_content_disposition_filename(header_value: Optional[str]) -> Optional[str]:
@@ -257,7 +258,13 @@ def git_commit_all(repo_root: Path, message: str) -> None:
 
 # ----------------- YAML edit -----------------
 
-def update_yaml_text(yaml_text: str, new_dest_filename: str, new_sha256: str) -> str:
+def update_yaml_text(
+    yaml_text: str,
+    new_dest_filename: str,
+    new_sha256: str,
+    new_renderer_filename: Optional[str] = None,
+    new_renderer_source_path: Optional[str] = None,
+) -> str:
     """Update dest-filename and sha256 in the first archive source under gates module.
 
     This performs a structured, indentation-aware textual edit to avoid YAML dependency.
@@ -362,7 +369,80 @@ def update_yaml_text(yaml_text: str, new_dest_filename: str, new_sha256: str) ->
         insert_pos = dest_idx if dest_idx != -1 else archive_item_idx + 1
         lines.insert(insert_pos + 1, new_sha_line)
 
+    # Optionally update renderer filename occurrences inside build-commands under gates module
+    if new_renderer_filename:
+        # Locate gates block bounds
+        def leading_spaces(s: str) -> int:
+            return len(s) - len(s.lstrip(' '))
+
+        gates_idx = -1
+        gates_indent = None
+        for i, line in enumerate(lines):
+            if re.match(r"^\s*-\s*name:\s*gates\s*$", line):
+                gates_idx = i
+                gates_indent = leading_spaces(line)
+                break
+        if gates_idx != -1:
+            # Find end of gates block
+            end_idx = len(lines)
+            for i in range(gates_idx + 1, len(lines)):
+                if leading_spaces(lines[i]) <= gates_indent:
+                    end_idx = i
+                    break
+            # Patterns for replacements
+            renderer_token_pattern = re.compile(r"(Renderer-[^\"'\s]+)")
+            renderer_path_pattern = re.compile(r"(renderer/)?(Renderer-[^\"'\s]+)")
+            for i in range(gates_idx + 1, end_idx):
+                line = lines[i]
+                if 'mv ' in line and 'bin/renderer/Renderer' in line:
+                    # Update mv source to include renderer/ prefix inside the unpacked archive
+                    if new_renderer_source_path:
+                        line = renderer_path_pattern.sub(new_renderer_source_path, line)
+                    else:
+                        line = renderer_path_pattern.sub(new_renderer_filename, line)
+                elif 'ln -s' in line and 'bin/renderer/Renderer' in line:
+                    # Update symlink filename (basename only)
+                    line = renderer_token_pattern.sub(new_renderer_filename, line)
+                else:
+                    # Generic replacement in other lines inside gates block
+                    if 'Renderer-' in line:
+                        line = renderer_token_pattern.sub(new_renderer_filename, line)
+                lines[i] = line
+
     return "\n".join(lines) + ("\n" if yaml_text.endswith("\n") else "")
+
+
+def find_renderer_in_zip(zip_path: Path) -> Optional[Tuple[str, str]]:
+    """Return (basename, path_in_zip) for the renderer binary inside renderer/ directory.
+
+    Looks for entries matching renderer/Renderer-* (files only). If none found,
+    returns None.
+    """
+    try:
+        with zipfile.ZipFile(zip_path) as zf:
+            names = zf.namelist()
+    except Exception:
+        return None
+
+    # Prefer files directly under renderer/ (no deeper subfolders)
+    candidates: list[Tuple[str, str]] = []
+    for name in names:
+        if not name.endswith('/') and name.startswith('renderer/'):
+            # Extract basename
+            base = os.path.basename(name)
+            # Heuristic: starts with Renderer- or exactly Renderer
+            if base.startswith('Renderer-') or base == 'Renderer':
+                # Ensure it's directly under renderer/ (no nested dirs)
+                rel = name[len('renderer/'):]
+                if '/' not in rel:
+                    candidates.append((base, name))
+
+    if not candidates:
+        return None
+
+    # Choose the longest basename (likely most specific/versioned)
+    candidates.sort(key=lambda t: len(t[0]), reverse=True)
+    return candidates[0]
 
 
 def main() -> int:
@@ -428,6 +508,16 @@ def main() -> int:
 
         version = extract_version_from_filename(file_path.name)
 
+        # Discover renderer filename and its path inside the zip (if present)
+        renderer_basename: Optional[str] = None
+        renderer_zip_path: Optional[str] = None
+        found = find_renderer_in_zip(file_path)
+        if found:
+            renderer_basename, renderer_zip_path = found
+            print(f"Found renderer in zip: {renderer_zip_path}")
+        else:
+            print('Renderer not found inside the zip under renderer/, keeping existing YAML renderer entries')
+
         # If using git, create/checkout the release branch BEFORE writing changes
         if not args.no_git:
             try:
@@ -442,9 +532,18 @@ def main() -> int:
                 return 1
 
         # Now write changes into the repo working tree on the release branch
-        updated_text = update_yaml_text(yaml_text, file_path.name, sha256_hex)
+        updated_text = update_yaml_text(
+            yaml_text,
+            new_dest_filename=file_path.name,
+            new_sha256=sha256_hex,
+            new_renderer_filename=renderer_basename,
+            new_renderer_source_path=renderer_zip_path,
+        )
         yaml_path.write_text(updated_text, encoding='utf-8')
         print(f'Updated {yaml_path} with dest-filename={file_path.name} and sha256={sha256_hex}')
+
+        if renderer_basename:
+            print(f"Updated renderer name to: {renderer_basename}")
 
         insert_release_note(appdata_path, version, args.release_description)
 

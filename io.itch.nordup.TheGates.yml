@@ -28,7 +28,7 @@ modules:
     buildsystem: simple
     build-commands:
       - 'mkdir "${FLATPAK_DEST}/bin/renderer"'
-      - 'mv renderer/Renderer-godot_v4.5.x86_64 "${FLATPAK_DEST}/bin/renderer/Renderer"'
+      - 'mv Renderer-godot_v4.5.x86_64 "${FLATPAK_DEST}/bin/renderer/Renderer"'
       - 'mv TheGates.x86_64 "${FLATPAK_DEST}/bin/TheGates"'
       - 'ln -s "${FLATPAK_DEST}/bin/renderer/Renderer" "${FLATPAK_DEST}/bin/renderer/Renderer-godot_v4.5.x86_64"'
       - 'install -Dm644 gates.desktop /app/share/applications/${FLATPAK_ID}.desktop'

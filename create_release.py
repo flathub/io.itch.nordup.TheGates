@@ -263,7 +263,6 @@ def update_yaml_text(
     new_dest_filename: str,
     new_sha256: str,
     new_renderer_filename: Optional[str] = None,
-    new_renderer_source_path: Optional[str] = None,
 ) -> str:
     """Update dest-filename and sha256 in the first archive source under gates module.
 
@@ -391,22 +390,20 @@ def update_yaml_text(
                     break
             # Patterns for replacements
             renderer_token_pattern = re.compile(r"(Renderer-[^\"'\s]+)")
-            renderer_path_pattern = re.compile(r"(renderer/)?(Renderer-[^\"'\s]+)")
+            # Match optional renderer/ prefix, capture entire match for replacement
+            renderer_optional_prefix_pattern = re.compile(r"(?:renderer/)?(Renderer-[^\"'\s]+)")
             for i in range(gates_idx + 1, end_idx):
                 line = lines[i]
                 if 'mv ' in line and 'bin/renderer/Renderer' in line:
-                    # Update mv source to include renderer/ prefix inside the unpacked archive
-                    if new_renderer_source_path:
-                        line = renderer_path_pattern.sub(new_renderer_source_path, line)
-                    else:
-                        line = renderer_path_pattern.sub(new_renderer_filename, line)
+                    # Ensure mv source uses only the basename (no renderer/ prefix)
+                    line = renderer_optional_prefix_pattern.sub(new_renderer_filename, line)
                 elif 'ln -s' in line and 'bin/renderer/Renderer' in line:
                     # Update symlink filename (basename only)
                     line = renderer_token_pattern.sub(new_renderer_filename, line)
                 else:
                     # Generic replacement in other lines inside gates block
                     if 'Renderer-' in line:
-                        line = renderer_token_pattern.sub(new_renderer_filename, line)
+                        line = renderer_optional_prefix_pattern.sub(new_renderer_filename, line)
                 lines[i] = line
 
     return "\n".join(lines) + ("\n" if yaml_text.endswith("\n") else "")
@@ -510,10 +507,10 @@ def main() -> int:
 
         # Discover renderer filename and its path inside the zip (if present)
         renderer_basename: Optional[str] = None
-        renderer_zip_path: Optional[str] = None
         found = find_renderer_in_zip(file_path)
         if found:
             renderer_basename, renderer_zip_path = found
+            # Only use and print the basename; do not inject path prefixes into YAML
             print(f"Found renderer in zip: {renderer_zip_path}")
         else:
             print('Renderer not found inside the zip under renderer/, keeping existing YAML renderer entries')
@@ -537,7 +534,6 @@ def main() -> int:
             new_dest_filename=file_path.name,
             new_sha256=sha256_hex,
             new_renderer_filename=renderer_basename,
-            new_renderer_source_path=renderer_zip_path,
         )
         yaml_path.write_text(updated_text, encoding='utf-8')
         print(f'Updated {yaml_path} with dest-filename={file_path.name} and sha256={sha256_hex}')

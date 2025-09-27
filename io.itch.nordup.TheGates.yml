@@ -28,7 +28,7 @@ modules:
     buildsystem: simple
     build-commands:
       - 'mkdir "${FLATPAK_DEST}/bin/renderer"'
-      - 'mv Renderer-godot_v4.5.x86_64 "${FLATPAK_DEST}/bin/renderer/Renderer"'
+      - 'mv renderer/Renderer-godot_v4.5.x86_64 "${FLATPAK_DEST}/bin/renderer/Renderer"'
       - 'mv TheGates.x86_64 "${FLATPAK_DEST}/bin/TheGates"'
       - 'ln -s "${FLATPAK_DEST}/bin/renderer/Renderer" "${FLATPAK_DEST}/bin/renderer/Renderer-godot_v4.5.x86_64"'
       - 'install -Dm644 gates.desktop /app/share/applications/${FLATPAK_ID}.desktop'
@@ -36,9 +36,9 @@ modules:
       - 'install -Dm644 icon_512.png /app/share/icons/hicolor/512x512/apps/${FLATPAK_ID}.png'
     sources:
       - type: archive
-        dest-filename: TheGates_Linux_0.22.0.zip
+        dest-filename: TheGates_Linux_0.22.1.zip
         url: 'https://thegates.io/downloads/linux-latest'
-        sha256: dc7c9912cbe67515f511cb3d4b3d7ca874ed10cd485a31c0c5b567cb6ec99308
+        sha256: 08f7e91dd3e56e2b440e1b7fbaa80332105d19081e7cd068b570cbb3681d30b8
       - type: file
         path: gates.desktop
       - type: file

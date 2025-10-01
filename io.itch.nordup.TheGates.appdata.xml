@@ -33,6 +33,12 @@ Follow the portals to travel between these worlds and discover the ones that tru
   </screenshots>
   <releases>
 
+    <release version="0.23.0" date="2025-10-01">
+      <description>
+        <p>Fix mouse position, download newest renderer</p>
+      </description>
+    </release>
+
     <release version="0.22.4" date="2025-09-30">
       <description>
         <p>Fix windows maximized mode 2px gap</p>

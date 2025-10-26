@@ -33,6 +33,12 @@ Follow the portals to travel between these worlds and discover the ones that tru
   </screenshots>
   <releases>
 
+    <release version="0.24.2" date="2025-10-27">
+      <description>
+        <p>Search and prompt improvements</p>
+      </description>
+    </release>
+
     <release version="0.24.1" date="2025-10-19">
       <description>
         <p>Fix gate description links</p>

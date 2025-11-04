@@ -33,6 +33,12 @@ Follow the portals to travel between these worlds and discover the ones that tru
   </screenshots>
   <releases>
 
+    <release version="0.24.4" date="2025-11-04">
+      <description>
+        <p>Fix docs url 2</p>
+      </description>
+    </release>
+
     <release version="0.24.3" date="2025-11-04">
       <description>
         <p>Fix docs url</p>

@@ -11,21 +11,15 @@ finish-args:
   - '--share=network'
   - '--share=ipc'
   - '--socket=pulseaudio'
-  - '--socket=x11'
+  - '--socket=wayland'
+  - '--socket=fallback-x11'
   - '--device=dri'
   - '--device=all'
 modules:
-  - name: libzmq
-    buildsystem: cmake-ninja
-    builddir: true
-    sources:
-      - type: archive
-        url: 'https://github.com/zeromq/libzmq/archive/v4.3.2.tar.gz'
-        sha256: 02ecc88466ae38cf2c8d79f09cfd2675ba299a439680b64ade733e26a349edeb
   - name: gates
     buildsystem: simple
     build-commands:
-      - 'mkdir "${FLATPAK_DEST}/bin/renderer"'
+      - 'mkdir -p "${FLATPAK_DEST}/bin/renderer"'
       - 'mv Renderer-godot_v4.5.x86_64 "${FLATPAK_DEST}/bin/renderer/Renderer"'
       - 'mv TheGates.x86_64 "${FLATPAK_DEST}/bin/TheGates"'
       - 'ln -s "${FLATPAK_DEST}/bin/renderer/Renderer" "${FLATPAK_DEST}/bin/renderer/Renderer-godot_v4.5.x86_64"'
@@ -34,9 +28,9 @@ modules:
       - 'install -Dm644 icon_512.png /app/share/icons/hicolor/512x512/apps/${FLATPAK_ID}.png'
     sources:
       - type: archive
-        dest-filename: TheGates_Linux_0.24.4.zip
+        dest-filename: TheGates_Linux_1.0.0.zip
         url: 'https://thegates.io/downloads/linux-latest'
-        sha256: ac334952619080b7ca9e5eff6756d14189ad61bf44a4ec908ace5cab5fcaad0e
+        sha256: a66d864bbf1e59f9371b4247a1975a010e397c89ca112844ec2f580e6e0d4432
       - type: file
         path: gates.desktop
       - type: file

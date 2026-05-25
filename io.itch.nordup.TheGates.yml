@@ -15,13 +15,6 @@ finish-args:
   - '--device=dri'
   - '--device=all'
 modules:
-  - name: libzmq
-    buildsystem: cmake-ninja
-    builddir: true
-    sources:
-      - type: archive
-        url: 'https://github.com/zeromq/libzmq/archive/v4.3.2.tar.gz'
-        sha256: 02ecc88466ae38cf2c8d79f09cfd2675ba299a439680b64ade733e26a349edeb
   - name: gates
     buildsystem: simple
     build-commands:

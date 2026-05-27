@@ -33,6 +33,12 @@ Follow the portals to travel between these worlds and discover the ones that tru
   </screenshots>
   <releases>
 
+    <release version="1.0.1" date="2026-05-27">
+      <description>
+        <p>Fix launcher rendering on Wayland sessions — launcher now uses XWayland, renderer keeps native Wayland.</p>
+      </description>
+    </release>
+
     <release version="1.0.0" date="2026-05-26">
       <description>
         <p>TheGates 1.0 — first stable release. Cross-platform sandboxing on Windows, Linux, macOS.</p>

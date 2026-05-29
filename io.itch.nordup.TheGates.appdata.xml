@@ -33,6 +33,12 @@ Follow the portals to travel between these worlds and discover the ones that tru
   </screenshots>
   <releases>
 
+    <release version="1.0.1" date="2026-05-29">
+      <description>
+        <p>Verbose renderer logging for better crash diagnostics</p>
+      </description>
+    </release>
+
     <release version="1.0.0" date="2026-05-26">
       <description>
         <p>TheGates 1.0 — first stable release. Cross-platform sandboxing on Windows, Linux, macOS.</p>

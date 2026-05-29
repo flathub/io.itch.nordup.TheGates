@@ -33,9 +33,9 @@ Follow the portals to travel between these worlds and discover the ones that tru
   </screenshots>
   <releases>
 
-    <release version="1.0.1" date="2026-05-27">
+    <release version="1.0.1" date="2026-05-29">
       <description>
-        <p>Fix launcher rendering on Wayland sessions — launcher now uses XWayland, renderer keeps native Wayland.</p>
+        <p>Verbose renderer logging for better crash diagnostics</p>
       </description>
     </release>
 

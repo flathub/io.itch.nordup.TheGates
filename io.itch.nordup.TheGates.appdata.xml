@@ -33,6 +33,12 @@ Follow the portals to travel between these worlds and discover the ones that tru
   </screenshots>
   <releases>
 
+    <release version="1.0.2" date="2026-06-14">
+      <description>
+        <p>Fix launcher crash on startup on X11 sessions and shader cache freezes on Linux</p>
+      </description>
+    </release>
+
     <release version="1.0.1" date="2026-05-29">
       <description>
         <p>Verbose renderer logging for better crash diagnostics</p>

@@ -33,6 +33,12 @@ Follow the portals to travel between these worlds and discover the ones that tru
   </screenshots>
   <releases>
 
+    <release version="1.0.5" date="2026-06-16">
+      <description>
+        <p>Fixed some worlds failing to load after an interrupted download — the launcher now retries automatically.</p>
+      </description>
+    </release>
+
     <release version="1.0.4" date="2026-06-16">
       <description>
         <p>Fix gates that could fail to start on some Linux (Wayland) systems</p>

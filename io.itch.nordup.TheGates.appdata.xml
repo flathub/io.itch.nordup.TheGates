@@ -33,6 +33,12 @@ Follow the portals to travel between these worlds and discover the ones that tru
   </screenshots>
   <releases>
 
+    <release version="1.0.7" date="2026-07-09">
+      <description>
+        <p>Renderer updates now reach existing installs — previously a cached world renderer was never refreshed after download</p>
+      </description>
+    </release>
+
     <release version="1.0.6" date="2026-07-09">
       <description>
         <p>Fix gates failing on NVIDIA GPUs (sandbox blocked driver allocations) and a renderer crash</p>
